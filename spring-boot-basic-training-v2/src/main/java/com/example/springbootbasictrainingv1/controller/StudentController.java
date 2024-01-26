@@ -67,17 +67,18 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable String id) {
+    public ResponseEntity<String> deleteStudent(@PathVariable("id") String studentId) {
         try {
-            String message = studentService.deleteStudent(id);
+            String message = studentService.deleteStudent(studentId);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
-            logger.warn("Student not found by ID: {}", id);
+            logger.warn("Student not found by ID: {}", studentId);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            logger.error("Error deleting student by ID: {}", id, e);
+            logger.error("Error deleting student by ID: {}", studentId, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 }
