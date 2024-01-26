@@ -1,5 +1,9 @@
 package com.example.springbootbasictrainingv1.service;
 
+import com.example.springbootbasictrainingv1.DTO.StudentRequestDTO;
+import com.example.springbootbasictrainingv1.DTO.StudentResponseDTO;
+import com.example.springbootbasictrainingv1.exception.ResourceNotFoundException;
+import com.example.springbootbasictrainingv1.mapper.DtoMapper;
 import com.example.springbootbasictrainingv1.model.Student;
 import com.example.springbootbasictrainingv1.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +21,30 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student getStudentById(String id) {
-        return studentRepository.findById(id).orElse(null);
+    public StudentResponseDTO getStudentById(String id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+        return DtoMapper.convertToDto(student);
     }
 
-    public void createStudent(Student student) {
+    public StudentResponseDTO createStudent(StudentRequestDTO studentRequest) {
+        // StudentRequestDTO to Student entity
+        Student student = new Student();
+        student.setName(studentRequest.getName());
+        student.setDateOfBirth(studentRequest.getDateOfBirth());
+        student.setAverage(studentRequest.getAverage());
+
         studentRepository.save(student);
+
+        // Student to StudentResponseDTO
+        return DtoMapper.convertToDto(student);
     }
 
-    public void deleteStudent(String id) {
+    public String deleteStudent(String id) {
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+
         studentRepository.deleteById(id);
+        return "Student deleted successfully";
     }
 }
-
