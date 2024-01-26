@@ -4,6 +4,8 @@ import com.example.springbootbasictrainingv1.DTO.StudentResponseDTO;
 import com.example.springbootbasictrainingv1.exception.ResourceNotFoundException;
 import com.example.springbootbasictrainingv1.mapper.DtoMapper;
 import com.example.springbootbasictrainingv1.model.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
+
+    private final Logger logger = LoggerFactory.getLogger(StudentController.class);
+
 
     @Autowired
     private StudentService studentService;
@@ -30,6 +35,7 @@ public class StudentController {
 
             return new ResponseEntity<>(students, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error fetching all students", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -40,8 +46,10 @@ public class StudentController {
             StudentResponseDTO studentResponseDTO = studentService.getStudentById(id);
             return new ResponseEntity<>(studentResponseDTO, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
+            logger.warn("Student not found by ID: {}", id);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            logger.error("Error fetching student by ID: {}", id, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -52,6 +60,7 @@ public class StudentController {
             StudentResponseDTO studentResponseDTO = studentService.createStudent(studentRequest);
             return new ResponseEntity<>(studentResponseDTO, HttpStatus.CREATED);
         } catch (Exception e) {
+            logger.error("Error creating a new student", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -62,8 +71,10 @@ public class StudentController {
             String message = studentService.deleteStudent(id);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
+            logger.warn("Student not found by ID: {}", id);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            logger.error("Error deleting student by ID: {}", id, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
