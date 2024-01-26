@@ -41,4 +41,3 @@ volumes:
 
 networks:
   krishantha:
-    driver: bridge
