@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -22,8 +23,8 @@ public class StudentService {
     }
 
     public StudentResponseDTO getStudentById(String id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+        Optional<Student> studentOptional = studentRepository.findById(id);
+        Student student = studentOptional.orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
         return DtoMapper.convertToDto(student);
     }
 
@@ -41,8 +42,8 @@ public class StudentService {
     }
 
     public String deleteStudent(String id) {
-        Student existingStudent = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+        Optional<Student> existingStudentOptional = studentRepository.findById(id);
+        Student existingStudent = existingStudentOptional.orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
 
         studentRepository.deleteById(id);
         return "Student deleted successfully";
