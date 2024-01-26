@@ -41,18 +41,19 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable String id) {
+    public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable("id") String studentId) {
         try {
-            StudentResponseDTO studentResponseDTO = studentService.getStudentById(id);
+            StudentResponseDTO studentResponseDTO = studentService.getStudentById(studentId);
             return new ResponseEntity<>(studentResponseDTO, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
-            logger.warn("Student not found by ID: {}", id);
+            logger.warn("Student not found by ID: {}", studentId);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            logger.error("Error fetching student by ID: {}", id, e);
+            logger.error("Error fetching student by ID: {}", studentId, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping
     public ResponseEntity<StudentResponseDTO> createStudent(@RequestBody StudentRequestDTO studentRequest) {
