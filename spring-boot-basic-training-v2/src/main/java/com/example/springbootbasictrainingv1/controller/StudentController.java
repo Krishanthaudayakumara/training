@@ -73,7 +73,7 @@ public class StudentController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             logger.warn("Student not found by ID: {}", studentId);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Student not found",HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Error deleting student by ID: {}", studentId, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
