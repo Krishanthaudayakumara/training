@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <!-- Define colors for levels -->
+    <!-- colors for levels -->
     <property name="INFO" value="green"/>
     <property name="WARN" value="yellow"/>
     <property name="ERROR" value="red"/>
