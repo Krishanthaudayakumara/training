@@ -1,48 +1,29 @@
 package com.example.springsecuritytraining.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-@RestController
+
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController@RequestMapping("/")
 public class MainController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken((UserDetails) authentication.getPrincipal());
-        return ResponseEntity.ok(token);
-    }
-
     @GetMapping("/home")
     public String home() {
         return "This is home page";
     }
 
     @GetMapping("/dashboard")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String dashboard() {
         return "This is dashboard page";
     }
 
     @GetMapping("/manage")
+    @PreAuthorize("hasRole('ADMIN')")
     public String manage() {
         return "This is manage page";
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    static class LoginRequest {
-        private String username;
-        private String password;
     }
 }
