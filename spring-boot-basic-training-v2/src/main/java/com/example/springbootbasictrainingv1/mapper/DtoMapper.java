@@ -4,14 +4,12 @@ import com.example.springbootbasictrainingv1.DTO.StudentResponseDTO;
 import com.example.springbootbasictrainingv1.model.Student;
 
 public class DtoMapper {
-
     public static StudentResponseDTO convertToDto(Student student) {
-        StudentResponseDTO dto = new StudentResponseDTO();
-        dto.setId(student.getId());
-        dto.setName(student.getName());
-        dto.setDateOfBirth(student.getDateOfBirth());
-        dto.setAverage(student.getAverage());
-
-        return dto;
+        return new StudentResponseDTO(
+                student.getId(),
+                student.getName(),
+                student.getDateOfBirth(),
+                student.getAverage()
+        );
     }
 }
