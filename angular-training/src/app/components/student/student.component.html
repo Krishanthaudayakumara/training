@@ -1,0 +1,29 @@
+<!-- student.component.html -->
+<p>{{ parentMessage }}</p>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let student">{{ student.id }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let student">{{ student.name }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dateOfBirth">
+    <mat-header-cell *matHeaderCellDef>Date of Birth</mat-header-cell>
+    <mat-cell *matCellDef="let student">{{
+      student.dateOfBirth | date : "short"
+    }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="average">
+    <mat-header-cell *matHeaderCellDef>Average</mat-header-cell>
+    <mat-cell *matCellDef="let student">{{ student.average }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
