@@ -5,12 +5,13 @@ import {HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ComponentOneComponent } from './components/component-one/component-one.component';
 import { ComponentTwoComponent } from './components/component-two/component-two.component';
+import { DataService } from './services/data/data.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, StudentComponent, CommonModule, ComponentOneComponent, ComponentTwoComponent, RouterOutlet, RouterLink, RouterLinkActive],
-  providers: [],
+  providers: [DataService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
   

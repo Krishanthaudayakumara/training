@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../../services/data/data.service';
 import { ComponentOneComponent } from '../component-one/component-one.component';
@@ -11,21 +11,18 @@ import { ComponentOneComponent } from '../component-one/component-one.component'
   templateUrl: './component-two.component.html',
   styleUrl: './component-two.component.css',
 })
-export class ComponentTwoComponent implements OnInit {
-  receivedMessage: string | undefined;
+export class ComponentTwoComponent implements OnDestroy {
+  receivedData: string = '';
   private subscription: Subscription | undefined;
 
-  constructor(private dataService: DataService) {}
-
-  ngOnInit() {
-    this.subscription = this.dataService.message$.subscribe((message) => {
-      this.receivedMessage = message;
-      console.log('Component Two received message:', this.receivedMessage);
+  constructor(@Inject(DataService) private dataService: DataService) {
+  this.subscription = this.dataService.data$.subscribe((data) => {
+      this.receivedData = data;
+      console.log('received data:', this.receivedData);
     });
   }
 
   ngOnDestroy() {
-    // Unsubscribe to avoid memory leaks
     this.subscription?.unsubscribe();
   }
 }

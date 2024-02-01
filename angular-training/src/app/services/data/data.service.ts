@@ -6,10 +6,11 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private messageSubject = new Subject<string>();
-  message$ = this.messageSubject.asObservable();
+  private dataSubject = new Subject<string>();
+  data$ = this.dataSubject.asObservable();
 
-  sendMessage(message: string) {
-    this.messageSubject.next(message);
+  sendData(data: string) {
+    this.dataSubject.next(data);
+    console.log("pass data",data);
   }
 }
