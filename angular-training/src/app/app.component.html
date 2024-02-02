@@ -1,0 +1,25 @@
+<div>{{ message }}</div>
+<div>Message from Child :{{ messageFromChild }}</div>
+
+<app-student
+  [parentMessage]="messageToChild"
+  (childMessageEvent)="receiveMessage($event)"
+></app-student>
+
+<div style="border: 1px solid black; padding: 6px">
+  <a routerLink="/one" routerLinkActive="active" ariaCurrentWhenActive="page"
+    >Component One</a
+  >
+  <br />
+  <a routerLink="/two" routerLinkActive="active" ariaCurrentWhenActive="page"
+    >Component Two</a
+  >
+  <br />
+  <a routerLink="/rxjs" routerLinkActive="active" ariaCurrentWhenActive="page">RxJs</a>
+  <router-outlet></router-outlet>
+
+</div>
+
+
+<app-component-two></app-component-two>
+
