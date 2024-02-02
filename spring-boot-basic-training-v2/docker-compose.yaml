@@ -18,8 +18,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: spring-boot-app-v1
-    container_name: spring-boot-app-v1-container
+    image: spring-boot-app-v2
+    container_name: spring-boot-app-v2-container
     ports:
       - "8080:8080"
     depends_on:

@@ -6,12 +6,15 @@ import { CommonModule } from '@angular/common';
 import { ComponentOneComponent } from './components/component-one/component-one.component';
 import { ComponentTwoComponent } from './components/component-two/component-two.component';
 import { DataService } from './services/data/data.service';
+import { SharingService } from './services/Sharing/sharing-service.service';
+import { ComponentThreeComponent } from './components/component-three/component-three.component';
+import { ComponentFourComponent } from './components/component-four/component-four.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, StudentComponent, CommonModule, ComponentOneComponent, ComponentTwoComponent, RouterOutlet, RouterLink, RouterLinkActive],
-  providers: [DataService],
+  imports: [RouterOutlet, StudentComponent, CommonModule, ComponentOneComponent, ComponentTwoComponent, ComponentThreeComponent, ComponentFourComponent, RouterOutlet, RouterLink, RouterLinkActive],
+  providers: [DataService, SharingService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
   
